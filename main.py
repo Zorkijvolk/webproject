@@ -34,6 +34,12 @@ markup5 = ReplyKeyboardMarkup(keyboard5, one_time_keyboard=False)
 
 keyboard6 = [['/sit'],
              ['/back']]
+markup6 = ReplyKeyboardMarkup(keyboard6, one_time_keyboard=False)
+
+keyboard7 = [['/take'],
+             ['/dont_take'],
+             ['/back']]
+markup7 = ReplyKeyboardMarkup(keyboard7, one_time_keyboard=False)
 
 
 async def back(update, context):
@@ -58,28 +64,58 @@ async def back(update, context):
         await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?', reply_markup=markup5)
         cur_stage = 4
         return 4
+    elif cur_stage == 7:
+        await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
+                                        ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
+        cur_stage = 6
+        return 6
 
 
 async def forward(update, context):
     global cur_stage
     if cur_stage == 4:
         await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
-                                        ' посидеть в нем или вернуться обратно?')
+                                        ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
         cur_stage = 6
         return 6
+
+
+async def sit(update, context):
+    global cur_stage, key
+    if cur_stage == 6:
+        if key:
+            await update.message.reply_text('Ты зашел в актовый зал и сел на удобные сиденья', reply_markup=markup4)
+        else:
+            await update.message.reply_text('Ты зашел в актовый зал и между сидений нашел ключ. Взять его?',
+                                            reply_markup=markup7)
+        cur_stage = 7
+        return 7
+
+
+async def take(update, context):
+    global cur_stage, key
+    if cur_stage == 7:
+        key = 1
+        await update.message.reply_text('Ты подобрал ключ. Интересно, может он что-то откроет?', reply_markup=markup4)
+
+
+async def dont_take(update, context):
+    global cur_stage
+    if cur_stage == 7:
+        await update.message.reply_text('Ты не взял ключ.', reply_markup=markup4)
 
 
 async def up(update, context):
     global cur_stage
     if cur_stage == 2:
-        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?')
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?', reply_markup=markup5)
         cur_stage = 4
         return 4
 
 
 async def right(update, context):
     global cur_stage, key
-    if cur_stage == 0:
+    if cur_stage == 0 or cur_stage == 1:
         await update.message.reply_text('Tы пришел к лестнице: пойти правее или подняться?', reply_markup=markup3)
         cur_stage = 2
         return 2
@@ -357,7 +393,8 @@ def main():
     #    application.add_handler(CommandHandler("right", right))
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start), CommandHandler('right', right), CommandHandler('left', left),
-                      CommandHandler('back', back), CommandHandler('up', up)],
+                      CommandHandler('back', back), CommandHandler('up', up), CommandHandler('forward', forward),
+                      CommandHandler('take', take), CommandHandler('dont_take', dont_take), CommandHandler('sit', sit)],
 
         states={
 
@@ -383,7 +420,8 @@ def main():
         },
 
         fallbacks=[CommandHandler('stop', stop), CommandHandler('right', right), CommandHandler('left', left),
-                   CommandHandler('back', back), CommandHandler('up', up)]
+                   CommandHandler('back', back), CommandHandler('up', up), CommandHandler('forward', forward),
+                   CommandHandler('take', take), CommandHandler('dont_take', dont_take), CommandHandler('sit', sit)]
     )
 
     application.add_handler(conv_handler)
