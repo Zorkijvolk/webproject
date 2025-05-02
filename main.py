@@ -2,7 +2,11 @@ from telegram.ext import Application, MessageHandler, filters, ConversationHandl
 from telegram import ReplyKeyboardRemove, ReplyKeyboardMarkup
 import logging
 
+<<<<<<< HEAD
 BOT_TOKEN = ''
+=======
+BOT_TOKEN = '..'
+>>>>>>> 031e0ca (markups)
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
@@ -14,6 +18,7 @@ keyboard1 = [['/right'],
 markup = ReplyKeyboardMarkup(keyboard1, one_time_keyboard=False)
 
 keyboard2 = [['/enter_the_cafeteria'],
+             ['/up'],
              ['/back']]
 markup2 = ReplyKeyboardMarkup(keyboard2, one_time_keyboard=False)
 
@@ -40,6 +45,22 @@ keyboard7 = [['/take'],
              ['/dont_take'],
              ['/back']]
 markup7 = ReplyKeyboardMarkup(keyboard7, one_time_keyboard=False)
+
+keyboard8 = [['/forward'],
+             ['/back']]
+markup8 = ReplyKeyboardMarkup(keyboard8, one_time_keyboard=False)
+
+
+async def enter_the_cafeteria(update, context):
+    global cur_stage, easter_egg
+    if cur_stage == 3:
+        if easter_egg:
+            await update.message.reply_text('Ты зашел в столовую и не нашел ничего интересного', reply_markup=markup4)
+        else:
+            await update.message.reply_text('Ты зашел в столовую и нашел вилку! Взять её или нет?',
+                                            reply_markup=markup7)
+        cur_stage = 8
+        return 8
 
 
 async def back(update, context):
@@ -69,11 +90,25 @@ async def back(update, context):
                                         ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
         cur_stage = 6
         return 6
+    elif cur_stage == 3:
+        await update.message.reply_text('У тебя выбор: пойти направо или налево?', reply_markup=markup)
+        cur_stage = 1
+        return 1
+    elif cur_stage == 8:
+        await update.message.reply_text('Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?',
+                                        reply_markup=markup2)
+        cur_stage = 3
+        return 3
+    elif cur_stage == 9:
+        await update.message.reply_text('Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?',
+                                        reply_markup=markup2)
+        cur_stage = 3
+        return 3
 
 
 async def forward(update, context):
     global cur_stage
-    if cur_stage == 4:
+    if cur_stage == 4 or cur_stage == 9:
         await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
                                         ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
         cur_stage = 6
@@ -93,16 +128,21 @@ async def sit(update, context):
 
 
 async def take(update, context):
-    global cur_stage, key
+    global cur_stage, key, easter_egg
     if cur_stage == 7:
         key = 1
         await update.message.reply_text('Ты подобрал ключ. Интересно, может он что-то откроет?', reply_markup=markup4)
+    if cur_stage == 8:
+        easter_egg = 1
+        await update.message.reply_text('Ты взял вилку. Может и пригодится!', reply_markup=markup4)
 
 
 async def dont_take(update, context):
     global cur_stage
     if cur_stage == 7:
         await update.message.reply_text('Ты не взял ключ.', reply_markup=markup4)
+    elif cur_stage == 8:
+        await update.message.reply_text('Ты не подобрал вилку. Зачем она в пустой школе?', reply_markup=markup4)
 
 
 async def up(update, context):
@@ -111,6 +151,10 @@ async def up(update, context):
         await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?', reply_markup=markup5)
         cur_stage = 4
         return 4
+    elif cur_stage == 3:
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед?', reply_markup=markup8)
+        cur_stage = 9
+        return 9
 
 
 async def right(update, context):
@@ -147,8 +191,9 @@ async def right(update, context):
 
 async def left(update, context):
     global cur_stage
-    if cur_stage == 0:
-        await update.message.reply_text('Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?')
+    if cur_stage == 0 or cur_stage == 1:
+        await update.message.reply_text('Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?',
+                                        reply_markup=markup2)
         cur_stage = 3
         return 3
 
@@ -162,7 +207,7 @@ async def start(update, context):
 
 
 async def first_response(update, context):
-    global last_ans
+    global last_ans, cur_stage
     if last_ans:
         ans = last_ans
         last_ans = None
@@ -172,14 +217,17 @@ async def first_response(update, context):
         await update.message.reply_text('У тебя выбор: пойти направо или налево?')
         return 1
     elif ans.lower() == 'направо':
-        await update.message.reply_text('Tы пришел к лестнице: пойти правее или подняться?')
+        await update.message.reply_text('Tы пришел к лестнице: пойти правее или подняться?', reply_markup=markup3)
+        cur_stage = 2
         return 2
-    await update.message.reply_text('Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?')
+    await update.message.reply_text('Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?',
+                                    reply_markup=markup2)
+    cur_stage = 3
     return 3
 
 
 async def second_response(update, context):
-    global last_ans
+    global last_ans, cur_stage
     if last_ans:
         ans = last_ans
         last_ans = None
@@ -194,7 +242,8 @@ async def second_response(update, context):
                                             " Ты зашел в кабинет и включил компьютер,"
                                             " вставил флешку и... включилось видео смешных котов?!"
                                             " Вдруг зазвенел будильник и ты проснулся!"
-                                            " А нечего перед сном кушать, а то всякая чушь будет сниться!")
+                                            " А нечего перед сном кушать, а то всякая чушь будет сниться!",
+                                            reply_markup=remove_markup)
             if easter_egg:
                 await update.message.reply_text('Поздравляю! Вы прошли игру! Собранно предметов: 1/1.'
                                                 ' Если хотите, можете сыграть снова!')
@@ -204,17 +253,20 @@ async def second_response(update, context):
             return ConversationHandler.END
         else:
             await update.message.reply_text('Ураа! Ты нашел кабинет информатики!... Но вот проблема! Он закрыт! \
-Ты этого не ожидал, надо искать ключ')
+Ты этого не ожидал, надо искать ключ', reply_markup=markup4)
+            cur_stage = 10
             return 10
     elif ans == 'подняться':
-        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?')
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?', reply_markup=markup5)
+        cur_stage = 4
         return 4
-    await update.message.reply_text('У тебя выбор: пойти направо или налево?')
+    await update.message.reply_text('У тебя выбор: пойти направо или налево?', reply_markup=markup)
+    cur_stage = 1
     return 1
 
 
 async def third_response(update, context):
-    global last_ans
+    global last_ans, cur_stage
     if last_ans:
         ans = last_ans
         last_ans = None
@@ -224,41 +276,49 @@ async def third_response(update, context):
         await update.message.reply_text('Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?')
         return 3
     elif ans == 'подняться':
-        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед?')
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед?', reply_markup=markup8)
+        cur_stage = 9
         return 9
     elif ans == 'зайти':
         if easter_egg:
-            await update.message.reply_text('Ты зашел в столовую и не нашел ничего интересного')
+            await update.message.reply_text('Ты зашел в столовую и не нашел ничего интересного', reply_markup=markup4)
         else:
-            await update.message.reply_text('Ты зашел в столовую и нашел вилку! Взять её или нет?')
+            await update.message.reply_text('Ты зашел в столовую и нашел вилку! Взять её или нет?',
+                                            reply_markup=markup7)
+        cur_stage = 8
         return 8
-    await update.message.reply_text('У тебя выбор: пойти направо или налево?')
+    await update.message.reply_text('У тебя выбор: пойти направо или налево?', reply_markup=markup)
+    cur_stage = 1
     return 1
 
 
 async def fourth_response(update, context):
-    global last_ans
+    global last_ans, cur_stage
     if last_ans:
         ans = last_ans
         last_ans = None
     else:
         ans = update.message.text
     if ans.lower() not in ['направо', 'вперед', 'обратно']:
-        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?')
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?', reply_markup=markup5)
+        cur_stage = 4
         return 4
     elif ans == 'направо':
-        await update.message.reply_text('Ты пришел к концу коридора, но ничего не нашел')
+        await update.message.reply_text('Ты пришел к концу коридора, но ничего не нашел', reply_markup=markup4)
+        cur_stage = 5
         return 5
     elif ans == 'вперед':
         await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
-                                        ' посидеть в нем или вернуться обратно?')
+                                        ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
+        cur_stage = 6
         return 6
-    await update.message.reply_text('Tы пришел к лестнице: пойти правее или подняться?')
+    await update.message.reply_text('Tы пришел к лестнице: пойти правее или подняться?', reply_markup=markup3)
+    cur_stage = 2
     return 2
 
 
 async def fifth_response(update, context):
-    global last_ans
+    global last_ans, cur_stage
     if last_ans:
         ans = last_ans
         last_ans = None
@@ -394,7 +454,8 @@ def main():
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start), CommandHandler('right', right), CommandHandler('left', left),
                       CommandHandler('back', back), CommandHandler('up', up), CommandHandler('forward', forward),
-                      CommandHandler('take', take), CommandHandler('dont_take', dont_take), CommandHandler('sit', sit)],
+                      CommandHandler('take', take), CommandHandler('dont_take', dont_take), CommandHandler('sit', sit),
+                      CommandHandler('enter_the_cafeteria', enter_the_cafeteria)],
 
         states={
 
@@ -421,7 +482,8 @@ def main():
 
         fallbacks=[CommandHandler('stop', stop), CommandHandler('right', right), CommandHandler('left', left),
                    CommandHandler('back', back), CommandHandler('up', up), CommandHandler('forward', forward),
-                   CommandHandler('take', take), CommandHandler('dont_take', dont_take), CommandHandler('sit', sit)]
+                   CommandHandler('take', take), CommandHandler('dont_take', dont_take), CommandHandler('sit', sit),
+                   CommandHandler('enter_the_cafeteria', enter_the_cafeteria)]
     )
 
     application.add_handler(conv_handler)
