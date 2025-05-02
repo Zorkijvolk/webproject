@@ -438,29 +438,29 @@ async def response_13(update, context):
     if ans.lower() == 'обратно':
         await update.message.reply_text('Ты прошел еще дальше. Вперед?')
         return 12
-    await update.message.reply_text('Ты все еще идешь по коридору. Дальше?')
+    await update.message.reply_text('Ты все еще идешь по коридору. Вперед?')
     return 14
 
 
 async def response_14(update, context):
     ans = update.message.text
     if ans.lower() not in ['обратно', 'вперед']:
-        await update.message.reply_text('Ты все еще идешь по коридору. Дальше?')
+        await update.message.reply_text('Ты все еще идешь по коридору. Вперед?')
         return 14
     if ans.lower() == 'обратно':
         await update.message.reply_text('Ты прошел подальше. Вперед?')
         return 13
-    await update.message.reply_text('Это очень длинный коридор. Дальше?')
+    await update.message.reply_text('Это очень длинный коридор. Вперед?')
     return 15
 
 
 async def response_15(update, context):
     ans = update.message.text
     if ans.lower() not in ['обратно', 'вперед']:
-        await update.message.reply_text('Это очень длинный коридор. Дальше?')
+        await update.message.reply_text('Это очень длинный коридор. Вперед?')
         return 15
     if ans.lower() == 'обратно':
-        await update.message.reply_text('Ты все еще идешь по коридору. Дальше?')
+        await update.message.reply_text('Ты все еще идешь по коридору. Вперед?')
         return 14
     await update.message.reply_text('Это оооооооочень длинный коридор. Вперед?')
     return 16
@@ -472,7 +472,7 @@ async def response_16(update, context):
         await update.message.reply_text('Это оооооооочень длинный коридор. Вперед?')
         return 16
     if ans.lower() == 'обратно':
-        await update.message.reply_text('Это очень длинный коридор. Дальше?')
+        await update.message.reply_text('Это очень длинный коридор. Вперед?')
         return 15
     await update.message.reply_text('Конца коридора еще не видно. Вперед?')
     return 17
@@ -537,7 +537,7 @@ async def response_21(update, context):
         await update.message.reply_text('Ты нашел какой-то коридор. Вперед?')
         return 21
     if ans.lower() == 'обратно':
-        await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или налево?')
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?')
         return 9
     await update.message.reply_text('Ты идешь по коридору. Вперед?')
     return 22
@@ -599,7 +599,7 @@ async def response_26(update, context):
     if ans.lower() == 'обратно':
         await update.message.reply_text('Ты снова идешь по коридору. Вперед?')
         return 25
-    await update.message.reply_text('Ты не зананчиваешь идти по коридору. Вперед?')
+    await update.message.reply_text('Ты не заканчиваешь идти по коридору. Вперед?')
     return 27
 
 
@@ -631,7 +631,7 @@ async def response_29(update, context):
     global easter_egg3
     ans = update.message.text
     if ans.lower() not in ['обратно', 'вперед']:
-        await update.message.reply_text('Вдали виден конец коридора. Ввперед?')
+        await update.message.reply_text('Вдали виден конец коридора. Вперед?')
         return 29
     if ans.lower() == 'обратно':
         await update.message.reply_text('Не может же этот коридор быть бесконечным. Вперед?')
@@ -642,7 +642,7 @@ async def response_29(update, context):
     else:
         easter_egg3 = 1
         await update.message.reply_text('Ты нашел на полу ластик. И зачем он?')
-        await update.message.reply_text('Ты вернулся к развилке')
+        await update.message.reply_text('Ты вернулся к развилке.')
         await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или налево?')
         return 9
 
