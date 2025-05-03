@@ -104,7 +104,8 @@ async def back(update, context):
         cur_stage = 3
         return 3
     elif cur_stage == 21:
-        await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?', reply_markup=markup9)
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?',
+                                        reply_markup=markup9)
         cur_stage = 9
         return 9
     elif cur_stage == 22:
@@ -143,10 +144,51 @@ async def back(update, context):
         await update.message.reply_text('Вдали виден конец коридора. Вперед?', reply_markup=markup8)
         cur_stage = 29
         return 29
+    elif cur_stage == 11:
+        await update.message.reply_text('Ты пришел в длинный коридор. Пойти вперед?', reply_markup=markup8)
+        cur_stage = 5
+        return 5
+    elif cur_stage == 12:
+        await update.message.reply_text('Ты прошел немного дальше по коридору и пока не видишь ничего интересного.'
+                                        ' Пойти вперед?', reply_markup=markup8)
+        cur_stage = 11
+        return 11
+    elif cur_stage == 13:
+        await update.message.reply_text('Ты прошел еще дальше. Вперед?', reply_markup=markup8)
+        cur_stage = 12
+        return 12
+    elif cur_stage == 14:
+        await update.message.reply_text('Ты прошел подальше. Вперед?', reply_markup=markup8)
+        cur_stage = 13
+        return 13
+    elif cur_stage == 15:
+        await update.message.reply_text('Ты все еще идешь по коридору. Дальше?', reply_markup=markup8)
+        cur_stage = 14
+        return 14
+    elif cur_stage == 16:
+        await update.message.reply_text('Это очень длинный коридор. Дальше?', reply_markup=markup8)
+        cur_stage = 15
+        return 15
+    elif cur_stage == 17:
+        await update.message.reply_text('Это оооооооочень длинный коридор. Вперед?', reply_markup=markup8)
+        cur_stage = 16
+        return 16
+    elif cur_stage == 18:
+        await update.message.reply_text('Конца коридора еще не видно. Вперед?', reply_markup=markup8)
+        cur_stage = 17
+        return 17
+    elif cur_stage == 19:
+        await update.message.reply_text('Тебе не надоело? Вперед?', reply_markup=markup8)
+        cur_stage = 18
+        return 18
+    elif cur_stage == 20:
+        await update.message.reply_text('Опять вперед?', reply_markup=markup8)
+        cur_stage = 19
+        return 19
 
 
 async def forward(update, context):
-    global cur_stage, easter_egg3
+    global cur_stage, easter_egg3, easter_egg2
     if cur_stage == 4:
         await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
                                         ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
@@ -193,9 +235,59 @@ async def forward(update, context):
             easter_egg3 = 1
             await update.message.reply_text('Ты нашел на полу ластик. И зачем он?')
             await update.message.reply_text('Ты вернулся к развилке')
-            await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?', reply_markup=markup9)
+            await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?',
+                                            reply_markup=markup9)
             cur_stage = 9
             return 9
+    elif cur_stage == 5:
+        await update.message.reply_text('Ты прошел немного дальше по коридору и пока не видишь ничего интересного.'
+                                        ' Пойти вперед?', reply_markup=markup8)
+        cur_stage = 11
+        return 11
+    elif cur_stage == 11:
+        await update.message.reply_text('Ты прошел еще дальше. Вперед?', reply_markup=markup8)
+        cur_stage = 12
+        return 12
+    elif cur_stage == 12:
+        await update.message.reply_text('Ты прошел подальше. Вперед?', reply_markup=markup8)
+        cur_stage = 13
+        return 13
+    elif cur_stage == 13:
+        await update.message.reply_text('Ты все еще идешь по коридору. Дальше?', reply_markup=markup8)
+        cur_stage = 14
+        return 14
+    elif cur_stage == 14:
+        await update.message.reply_text('Это очень длинный коридор. Дальше?', reply_markup=markup8)
+        cur_stage = 15
+        return 15
+    elif cur_stage == 15:
+        await update.message.reply_text('Это оооооооочень длинный коридор. Вперед?', reply_markup=markup8)
+        cur_stage = 16
+        return 16
+    elif cur_stage == 16:
+        await update.message.reply_text('Конца коридора еще не видно. Вперед?', reply_markup=markup8)
+        cur_stage = 17
+        return 17
+    elif cur_stage == 17:
+        await update.message.reply_text('Тебе не надоело? Вперед?', reply_markup=markup8)
+        cur_stage = 18
+        return 18
+    elif cur_stage == 18:
+        await update.message.reply_text('Опять вперед?', reply_markup=markup8)
+        cur_stage = 19
+        return 19
+    elif cur_stage == 19:
+        if easter_egg2:
+            await update.message.reply_text('Ты уже был здесь. Ничего интересного не осталось', reply_markup=markup4)
+            cur_stage = 20
+            return 20
+        else:
+            easter_egg2 = 1
+            await update.message.reply_text('Все же это было не зря. Ты нашел линейку. Смешно, правда?')
+            await update.message.reply_text('Ты вернулся к развилке.')
+            await update.message.reply_text('Ты пришел на 2 этаж. Пойти вперед или направо?', reply_markup=markup5)
+            cur_stage = 4
+            return 4
 
 
 async def sit(update, context):
@@ -248,7 +340,7 @@ async def right(update, context):
         cur_stage = 2
         return 2
     elif cur_stage == 4:
-        await update.message.reply_text('Ты пришел к концу коридора, но ничего не нашел')
+        await update.message.reply_text('Ты пришел в длинный коридор. Пойти вперед?', reply_markup=markup8)
         cur_stage = 5
         return 5
     elif cur_stage == 2:
@@ -380,7 +472,7 @@ async def response_4(update, context):
         cur_stage = 4
         return 4
     elif ans == 'направо':
-        await update.message.reply_text('Ты пришел в длинный коридор. Пойти вперед?', reply_markup=markup4)
+        await update.message.reply_text('Ты пришел в длинный коридор. Пойти вперед?', reply_markup=markup8)
         cur_stage = 5
         return 5
     elif ans == 'вперед':
