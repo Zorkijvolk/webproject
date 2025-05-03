@@ -3,7 +3,7 @@ from telegram import ReplyKeyboardRemove, ReplyKeyboardMarkup
 import logging
 
 
-BOT_TOKEN = '7989394633:AAGM7t3fhJTsqb1YkCN98uAxjylrq2TKZa8'
+BOT_TOKEN = 'TOKEN'
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
