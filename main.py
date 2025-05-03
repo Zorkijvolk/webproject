@@ -104,25 +104,98 @@ async def back(update, context):
         cur_stage = 3
         return 3
     elif cur_stage == 21:
-        await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?')
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?', reply_markup=markup9)
         cur_stage = 9
         return 9
     elif cur_stage == 22:
-        await update.message.reply_text('Ты нашёл какой-то коридор. Вперед?')
+        await update.message.reply_text('Ты нашел какой-то коридор. Вперед?', reply_markup=markup8)
         cur_stage = 21
         return 21
     elif cur_stage == 23:
+        await update.message.reply_text('Ты идешь по коридору. Вперед?', reply_markup=markup8)
         cur_stage = 22
         return 22
+    elif cur_stage == 24:
+        await update.message.reply_text('Ты все еще идешь по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 23
+        return 23
+    elif cur_stage == 25:
+        await update.message.reply_text('Ты опять идешь по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 24
+        return 24
+    elif cur_stage == 26:
+        await update.message.reply_text('Ты снова идешь по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 25
+        return 25
+    elif cur_stage == 27:
+        await update.message.reply_text('Ты продолжаешь идти по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 26
+        return 26
+    elif cur_stage == 28:
+        await update.message.reply_text('Ты не зананчиваешь идти по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 27
+        return 27
+    elif cur_stage == 29:
+        await update.message.reply_text('Не может же этот коридор быть бесконечным. Вперед?', reply_markup=markup8)
+        cur_stage = 28
+        return 28
+    elif cur_stage == 30:
+        await update.message.reply_text('Вдали виден конец коридора. Вперед?', reply_markup=markup8)
+        cur_stage = 29
+        return 29
 
 
 async def forward(update, context):
-    global cur_stage
+    global cur_stage, easter_egg3
     if cur_stage == 4:
         await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
                                         ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
         cur_stage = 6
         return 6
+    elif cur_stage == 21:
+        await update.message.reply_text('Ты идешь по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 22
+        return 22
+    elif cur_stage == 22:
+        await update.message.reply_text('Ты все еще идешь по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 23
+        return 23
+    elif cur_stage == 23:
+        await update.message.reply_text('Ты опять идешь по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 24
+        return 24
+    elif cur_stage == 24:
+        await update.message.reply_text('Ты снова идешь по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 25
+        return 25
+    elif cur_stage == 25:
+        await update.message.reply_text('Ты продолжаешь идти по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 26
+        return 26
+    elif cur_stage == 26:
+        await update.message.reply_text('Ты не зананчиваешь идти по коридору. Вперед?', reply_markup=markup8)
+        cur_stage = 27
+        return 27
+    elif cur_stage == 27:
+        await update.message.reply_text('Не может же этот коридор быть бесконечным. Вперед?', reply_markup=markup8)
+        cur_stage = 28
+        return 28
+    elif cur_stage == 28:
+        await update.message.reply_text('Вдали виден конец коридора. Вперед?', reply_markup=markup8)
+        cur_stage = 29
+        return 29
+    elif cur_stage == 29:
+        if easter_egg3:
+            await update.message.reply_text('Здесь нет ничего интересного', reply_markup=markup4)
+            cur_stage = 30
+            return 30
+        else:
+            easter_egg3 = 1
+            await update.message.reply_text('Ты нашел на полу ластик. И зачем он?')
+            await update.message.reply_text('Ты вернулся к развилке')
+            await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?', reply_markup=markup9)
+            cur_stage = 9
+            return 9
 
 
 async def sit(update, context):
