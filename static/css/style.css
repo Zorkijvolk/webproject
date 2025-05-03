@@ -8,10 +8,17 @@ h4.Base_h4{
 }
 
 h2.index_h2{
-    position: left;
     padding-bottom: 20px;
 }
 
 div {
     font-size: 17px;
+}
+
+h2.moscow_h2{
+    text-align: center;
+}
+
+div.moscow_image{
+    text-align: center;
 }
