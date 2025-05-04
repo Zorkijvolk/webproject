@@ -45,7 +45,6 @@ markup6 = ReplyKeyboardMarkup(keyboard6, one_time_keyboard=True)
 
 keyboard7 = [['/take'],
              ['/dont_take'],
-             ['/back'],
              ['/stop']]
 markup7 = ReplyKeyboardMarkup(keyboard7, one_time_keyboard=True)
 
