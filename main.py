@@ -2,7 +2,7 @@ from telegram.ext import Application, MessageHandler, filters, ConversationHandl
 from telegram import ReplyKeyboardRemove, ReplyKeyboardMarkup
 import logging
 
-BOT_TOKEN = '7989394633:AAGM7t3fhJTsqb1YkCN98uAxjylrq2TKZa8'
+BOT_TOKEN = ''
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
@@ -144,7 +144,7 @@ async def back(update, context):
         context.user_data['cur_stage'] = 26
         return 26
     elif context.user_data['cur_stage'] == 28:
-        await update.message.reply_text('Ты не зананчиваешь идти по коридору. Вперед?', reply_markup=markup8)
+        await update.message.reply_text('Ты не заканчиваешь идти по коридору. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 27
         return 27
     elif context.user_data['cur_stage'] == 29:
@@ -227,7 +227,7 @@ async def forward(update, context):
         context.user_data['cur_stage'] = 26
         return 26
     elif context.user_data['cur_stage'] == 26:
-        await update.message.reply_text('Ты не зананчиваешь идти по коридору. Вперед?', reply_markup=markup8)
+        await update.message.reply_text('Ты не заканчиваешь идти по коридору. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 27
         return 27
     elif context.user_data['cur_stage'] == 27:
@@ -846,7 +846,7 @@ async def response_26(update, context):
         await update.message.reply_text('Ты снова идешь по коридору. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 25
         return 25
-    await update.message.reply_text('Ты не зананчиваешь идти по коридору. Вперед?', reply_markup=markup8)
+    await update.message.reply_text('Ты не заканчиваешь идти по коридору. Вперед?', reply_markup=markup8)
     context.user_data['cur_stage'] = 27
     return 27
 
@@ -854,7 +854,7 @@ async def response_26(update, context):
 async def response_27(update, context):
     ans = update.message.text.lower()
     if ans not in ['обратно', 'вперед']:
-        await update.message.reply_text('Ты не зананчиваешь идти по коридору. Вперед?', reply_markup=markup8)
+        await update.message.reply_text('Ты не заканчиваешь идти по коридору. Вперед?', reply_markup=markup8)
         return 27
     if ans == 'обратно':
         await update.message.reply_text('Ты продолжаешь идти по коридору. Вперед?', reply_markup=markup8)
@@ -871,7 +871,7 @@ async def response_28(update, context):
         await update.message.reply_text('Не может же этот коридор быть бесконечным. Вперед?', reply_markup=markup8)
         return 28
     if ans == 'обратно':
-        await update.message.reply_text('Ты не зананчиваешь идти по коридору. Вперед?', reply_markup=markup8)
+        await update.message.reply_text('Ты не заканчиваешь идти по коридору. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 27
         return 27
     await update.message.reply_text('Вдали виден конец коридора. Вперед?', reply_markup=markup8)
