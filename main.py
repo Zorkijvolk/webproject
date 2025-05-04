@@ -5,7 +5,7 @@ from data import db_session
 from data.help_table import HelpTable
 
 
-BOT_TOKEN = ''
+BOT_TOKEN = '7989394633:AAGM7t3fhJTsqb1YkCN98uAxjylrq2TKZa8'
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
@@ -175,11 +175,11 @@ async def back(update, context):
         context.user_data['cur_stage'] = 13
         return 13
     elif context.user_data['cur_stage'] == 15:
-        await update.message.reply_text('Ты все еще идешь по коридору. Дальше?', reply_markup=markup8)
+        await update.message.reply_text('Ты все еще идешь по коридору. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 14
         return 14
     elif context.user_data['cur_stage'] == 16:
-        await update.message.reply_text('Это очень длинный коридор. Дальше?', reply_markup=markup8)
+        await update.message.reply_text('Это очень длинный коридор. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 15
         return 15
     elif context.user_data['cur_stage'] == 17:
@@ -267,11 +267,11 @@ async def forward(update, context):
         context.user_data['cur_stage'] = 13
         return 13
     elif context.user_data['cur_stage'] == 13:
-        await update.message.reply_text('Ты все еще идешь по коридору. Дальше?', reply_markup=markup8)
+        await update.message.reply_text('Ты все еще идешь по коридору. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 14
         return 14
     elif context.user_data['cur_stage'] == 14:
-        await update.message.reply_text('Это очень длинный коридор. Дальше?', reply_markup=markup8)
+        await update.message.reply_text('Это очень длинный коридор. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 15
         return 15
     elif context.user_data['cur_stage'] == 15:
@@ -322,19 +322,35 @@ async def take(update, context):
         return ConversationHandler.END
     if context.user_data['cur_stage'] == 7:
         context.user_data['key'] = 1
-        await update.message.reply_text('Ты подобрал ключ. Интересно, может он что-то откроет?', reply_markup=markup4)
+        await update.message.reply_text('Ты подобрал ключ. Интересно, может он что-то откроет?',)
+        await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
+                                        ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
+        context.user_data['cur_stage'] = 6
+        return 6
     if context.user_data['cur_stage'] == 8:
         context.user_data['easter_egg1'] = 1
-        await update.message.reply_text('Ты взял вилку. Может и пригодится!', reply_markup=markup4)
+        await update.message.reply_text('Ты взял вилку. Может и пригодится!')
+        await update.message.reply_text(
+            'Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?', reply_markup=markup2)
+        context.user_data['cur_stage'] = 3
+        return 3
 
 
 async def dont_take(update, context):
     if 'cur_stage' not in context.user_data or context.user_data['cur_stage'] == 0:
         return ConversationHandler.END
     elif context.user_data['cur_stage'] == 7:
-        await update.message.reply_text('Ты не взял ключ.', reply_markup=markup4)
+        await update.message.reply_text('Ты не взял ключ.')
+        await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
+                                        ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
+        context.user_data['cur_stage'] = 6
+        return 6
     elif context.user_data['cur_stage'] == 8:
-        await update.message.reply_text('Ты не подобрал вилку. Зачем она в пустой школе?', reply_markup=markup4)
+        await update.message.reply_text('Ты не подобрал вилку. Зачем она в пустой школе?')
+        await update.message.reply_text(
+            'Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?', reply_markup=markup2)
+        context.user_data['cur_stage'] = 3
+        return 3
 
 
 async def up(update, context):
@@ -345,7 +361,7 @@ async def up(update, context):
         context.user_data['cur_stage'] = 4
         return 4
     elif context.user_data['cur_stage'] == 3:
-        await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно??',
+        await update.message.reply_text('Ты пришел на 2 этаж. Пойти налево или вернуться обратно?',
                                         reply_markup=markup9)
         context.user_data['cur_stage'] = 9
         return 9
@@ -560,10 +576,9 @@ async def response_7(update, context):
             return 7
         elif ans == 'взять':
             context.user_data['key'] = 1
-            await update.message.reply_text('Ты подобрал ключ. Интересно, может он что-то откроет?',
-                                            reply_markup=markup4)
+            await update.message.reply_text('Ты подобрал ключ. Интересно, может он что-то откроет?')
         elif ans == 'нет':
-            await update.message.reply_text('Ты не взял ключ.', reply_markup=markup4)
+            await update.message.reply_text('Ты не взял ключ.')
         await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
                                         ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
         context.user_data['cur_stage'] = 6
@@ -584,13 +599,14 @@ async def response_8(update, context):
         if ans not in ['взять', 'нет']:
             await update.message.reply_text('Ты зашел в столовую и нашел вилку! Взять её или нет?',
                                             reply_markup=markup7)
+            return 8
         elif ans == 'взять':
             context.user_data['easter_egg1'] = 1
-            await update.message.reply_text('Ты взял вилку. Может и пригодится!', reply_markup=markup4)
+            await update.message.reply_text('Ты взял вилку. Может и пригодится!')
         elif ans == 'нет':
-            await update.message.reply_text('Ты не подобрал вилку. Зачем она в пустой школе?', reply_markup=markup4)
-        await update.message.reply_text('Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?',
-                                        reply_markup=markup2)
+            await update.message.reply_text('Ты не подобрал вилку. Зачем она в пустой школе?')
+        await update.message.reply_text(
+            'Ты пришел к лестнице и столовой. Зайти в столовую или подняться на 2 этаж?', reply_markup=markup2)
         context.user_data['cur_stage'] = 3
         return 3
 
@@ -661,7 +677,7 @@ async def response_13(update, context):
         await update.message.reply_text('Ты прошел еще дальше. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 12
         return 12
-    await update.message.reply_text('Ты все еще идешь по коридору. Дальше?', reply_markup=markup8)
+    await update.message.reply_text('Ты все еще идешь по коридору. Вперед?', reply_markup=markup8)
     context.user_data['cur_stage'] = 14
     return 14
 
@@ -669,13 +685,13 @@ async def response_13(update, context):
 async def response_14(update, context):
     ans = update.message.text.lower()
     if ans not in ['обратно', 'вперед']:
-        await update.message.reply_text('Ты все еще идешь по коридору. Дальше?', reply_markup=markup8)
+        await update.message.reply_text('Ты все еще идешь по коридору. Вперед?', reply_markup=markup8)
         return 14
     if ans == 'обратно':
         await update.message.reply_text('Ты прошел подальше. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 13
         return 13
-    await update.message.reply_text('Это очень длинный коридор. Дальше?', reply_markup=markup8)
+    await update.message.reply_text('Это очень длинный коридор. Вперед?', reply_markup=markup8)
     context.user_data['cur_stage'] = 15
     return 15
 
@@ -683,10 +699,10 @@ async def response_14(update, context):
 async def response_15(update, context):
     ans = update.message.text.lower()
     if ans not in ['обратно', 'вперед']:
-        await update.message.reply_text('Это очень длинный коридор. Дальше?', reply_markup=markup8)
+        await update.message.reply_text('Это очень длинный коридор. Вперед?', reply_markup=markup8)
         return 15
     if ans == 'обратно':
-        await update.message.reply_text('Ты все еще идешь по коридору. Дальше?', reply_markup=markup8)
+        await update.message.reply_text('Ты все еще идешь по коридору. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 14
         return 14
     await update.message.reply_text('Это оооооооочень длинный коридор. Вперед?', reply_markup=markup8)
@@ -700,7 +716,7 @@ async def response_16(update, context):
         await update.message.reply_text('Это оооооооочень длинный коридор. Вперед?', reply_markup=markup8)
         return 16
     if ans == 'обратно':
-        await update.message.reply_text('Это очень длинный коридор. Дальше?', reply_markup=markup8)
+        await update.message.reply_text('Это очень длинный коридор. Вперед?', reply_markup=markup8)
         context.user_data['cur_stage'] = 15
         return 15
     await update.message.reply_text('Конца коридора еще не видно. Вперед?', reply_markup=markup8)
