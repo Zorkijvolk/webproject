@@ -1,6 +1,9 @@
 from telegram.ext import Application, MessageHandler, filters, ConversationHandler, CommandHandler
 from telegram import ReplyKeyboardRemove, ReplyKeyboardMarkup
 import logging
+from data import db_session
+from data.help_table import HelpTable
+
 
 BOT_TOKEN = ''
 logging.basicConfig(
@@ -922,8 +925,14 @@ async def stop(update, context):
     return ConversationHandler.END
 
 
+async def help_func(update, context):
+    await update.message.reply_text(db_session.create_session().query(HelpTable).filter(HelpTable.id == 1)[0].text)
+
+
 def main():
+    db_session.global_init("db/bot_db.sqlite")
     application = Application.builder().token(BOT_TOKEN).build()
+    application.add_handler(CommandHandler("help", help_func))
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start), CommandHandler('right', right), CommandHandler('left', left),
                       CommandHandler('back', back), CommandHandler('up', up), CommandHandler('forward', forward),
