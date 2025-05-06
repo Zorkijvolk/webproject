@@ -391,12 +391,12 @@ async def right(update, context):
                 await update.message.reply_text('Поздравляю! Вы прошли игру! Собранно предметов: 3/3.'
                                                 ' Если хотите, можете сыграть снова!'
                                                 ' Также можете посетить сайт нашего бота:'
-                                                ' https://labirint-bot.glitch.me')
+                                                ' https://220bf22b-44fd-4106-bf3e-e26e21a1adca.tunnel4.com/')
             else:
                 await update.message.reply_text(f'Поздравляю! Вы прошли игру! Собранно предметов: {score}/3.'
                                                 f' Рекомендуем поискать пасхалки! '
                                                 f'Также можете посетить сайт нашего бота:'
-                                                f' https://labirint-bot.glitch.me')
+                                                f' https://220bf22b-44fd-4106-bf3e-e26e21a1adca.tunnel4.com/')
             return ConversationHandler.END
         else:
             await update.message.reply_text('Ураа! Ты нашел кабинет информатики!... Но вот проблема! Он закрыт!'
@@ -467,12 +467,12 @@ async def response_2(update, context):
                 await update.message.reply_text('Поздравляю! Вы прошли игру! Собранно предметов: 3/3.'
                                                 ' Если хотите, можете сыграть снова! '
                                                 'Также можете посетить сайт нашего бота:'
-                                                ' https://labirint-bot.glitch.me')
+                                                ' https://220bf22b-44fd-4106-bf3e-e26e21a1adca.tunnel4.com/')
             else:
                 await update.message.reply_text(f'Поздравляю! Вы прошли игру! Собранно предметов: {score}/3.'
                                                 f' Рекомендуем поискать пасхалки! '
                                                 f'Также можете посетить сайт нашего бота:'
-                                                f' https://labirint-bot.glitch.me')
+                                                f' https://220bf22b-44fd-4106-bf3e-e26e21a1adca.tunnel4.com/')
             return ConversationHandler.END
         else:
             await update.message.reply_text('Ураа! Ты нашел кабинет информатики!... Но вот проблема! Он закрыт! '
