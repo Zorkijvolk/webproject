@@ -28,4 +28,5 @@ def moscow():
 
 if __name__ == '__main__':
     app.run()
-    os.remove('static/img/moscow.png')
+    if os.access("static/img/moscow.png", os.F_OK):
+        os.remove('static/img/moscow.png')
