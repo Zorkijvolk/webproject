@@ -391,12 +391,12 @@ async def right(update, context):
                 await update.message.reply_text('Поздравляю! Вы прошли игру! Собранно предметов: 3/3.'
                                                 ' Если хотите, можете сыграть снова!'
                                                 ' Также можете посетить сайт нашего бота:'
-                                                ' https://220bf22b-44fd-4106-bf3e-e26e21a1adca.tunnel4.com/')
+                                                ' https://2d05ce09-7c1c-4fdc-9727-ef899caaa4fc.tunnel4.com/')
             else:
                 await update.message.reply_text(f'Поздравляю! Вы прошли игру! Собранно предметов: {score}/3.'
                                                 f' Рекомендуем поискать пасхалки! '
                                                 f'Также можете посетить сайт нашего бота:'
-                                                f' https://220bf22b-44fd-4106-bf3e-e26e21a1adca.tunnel4.com/')
+                                                f' https://2d05ce09-7c1c-4fdc-9727-ef899caaa4fc.tunnel4.com/')
             return ConversationHandler.END
         else:
             await update.message.reply_text('Ураа! Ты нашел кабинет информатики!... Но вот проблема! Он закрыт!'
@@ -467,12 +467,12 @@ async def response_2(update, context):
                 await update.message.reply_text('Поздравляю! Вы прошли игру! Собранно предметов: 3/3.'
                                                 ' Если хотите, можете сыграть снова! '
                                                 'Также можете посетить сайт нашего бота:'
-                                                ' https://220bf22b-44fd-4106-bf3e-e26e21a1adca.tunnel4.com/')
+                                                ' https://2d05ce09-7c1c-4fdc-9727-ef899caaa4fc.tunnel4.com/')
             else:
                 await update.message.reply_text(f'Поздравляю! Вы прошли игру! Собранно предметов: {score}/3.'
                                                 f' Рекомендуем поискать пасхалки! '
                                                 f'Также можете посетить сайт нашего бота:'
-                                                f' https://220bf22b-44fd-4106-bf3e-e26e21a1adca.tunnel4.com/')
+                                                f' https://2d05ce09-7c1c-4fdc-9727-ef899caaa4fc.tunnel4.com/')
             return ConversationHandler.END
         else:
             await update.message.reply_text('Ураа! Ты нашел кабинет информатики!... Но вот проблема! Он закрыт! '
