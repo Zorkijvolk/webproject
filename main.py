@@ -4,7 +4,6 @@ import logging
 from data import db_session
 from data.help_table import HelpTable
 
-
 BOT_TOKEN = ''
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
@@ -322,7 +321,7 @@ async def take(update, context):
         return ConversationHandler.END
     if context.user_data['cur_stage'] == 7:
         context.user_data['key'] = 1
-        await update.message.reply_text('Ты подобрал ключ. Интересно, может он что-то откроет?',)
+        await update.message.reply_text('Ты подобрал ключ. Интересно, может он что-то откроет?', )
         await update.message.reply_text('Tы пришел к большому актовому залу, почти как в театре:'
                                         ' посидеть в нем или вернуться обратно?', reply_markup=markup6)
         context.user_data['cur_stage'] = 6
@@ -390,10 +389,14 @@ async def right(update, context):
                      context.user_data["easter_egg3"])
             if score == 3:
                 await update.message.reply_text('Поздравляю! Вы прошли игру! Собранно предметов: 3/3.'
-                                                ' Если хотите, можете сыграть снова!')
+                                                ' Если хотите, можете сыграть снова!'
+                                                ' Также можете посетить сайт нашего бота:'
+                                                ' https://labirint-bot.glitch.me')
             else:
                 await update.message.reply_text(f'Поздравляю! Вы прошли игру! Собранно предметов: {score}/3.'
-                                                f' Рекомендуем поискать пасхалки!')
+                                                f' Рекомендуем поискать пасхалки! '
+                                                f'Также можете посетить сайт нашего бота:'
+                                                f' https://labirint-bot.glitch.me')
             return ConversationHandler.END
         else:
             await update.message.reply_text('Ураа! Ты нашел кабинет информатики!... Но вот проблема! Он закрыт!'
@@ -462,10 +465,14 @@ async def response_2(update, context):
                      context.user_data["easter_egg3"])
             if score == 3:
                 await update.message.reply_text('Поздравляю! Вы прошли игру! Собранно предметов: 3/3.'
-                                                ' Если хотите, можете сыграть снова!')
+                                                ' Если хотите, можете сыграть снова! '
+                                                'Также можете посетить сайт нашего бота:'
+                                                ' https://labirint-bot.glitch.me')
             else:
                 await update.message.reply_text(f'Поздравляю! Вы прошли игру! Собранно предметов: {score}/3.'
-                                                f' Рекомендуем поискать пасхалки!')
+                                                f' Рекомендуем поискать пасхалки! '
+                                                f'Также можете посетить сайт нашего бота:'
+                                                f' https://labirint-bot.glitch.me')
             return ConversationHandler.END
         else:
             await update.message.reply_text('Ураа! Ты нашел кабинет информатики!... Но вот проблема! Он закрыт! '
