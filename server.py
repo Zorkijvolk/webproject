@@ -15,7 +15,7 @@ def index():
     return render_template("index.html", title='Replicas')
 
 
-@app.route("/moscow")
+@app.route("/Moscow")
 def moscow():
     map_request = f"{server_address_map}bbox=36.803079,55.142226~37.967466,56.021286&apikey={map_api_key}"
     map_response = get(map_request)
